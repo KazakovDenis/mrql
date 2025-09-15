@@ -9,5 +9,5 @@ class BaseCompiler(ABC):
         self._ir = ir
 
     @abstractmethod
-    def compile(self) -> NoReturn:
+    def compile(self, **params) -> NoReturn:
         raise NotImplementedError

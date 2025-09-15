@@ -13,10 +13,10 @@ _transformer = None
 
 
 def _compile(parser: Lark, transformer: PipelineTransformer) -> Callable[[str], list[dict]]:
-    def inner(query: str) -> list[dict]:
+    def inner(query: str, **params) -> list[dict]:
         ast = parser.parse(query)
         ir = transformer.transform(ast)
-        return PythonCompiler(ir).compile()
+        return PythonCompiler(ir).compile(**params)
 
     return inner
 

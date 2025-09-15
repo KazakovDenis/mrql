@@ -4,7 +4,7 @@ from mrql.codegen.base import BaseCompiler
 
 
 class PythonCompiler(BaseCompiler):
-    def compile(self) -> list[dict[str, Any]]:
+    def compile(self, **params) -> list[dict[str, Any]]:
         pipeline = []
         for stage in self._ir.get('stages', []):
             stage_type = stage.get('type')

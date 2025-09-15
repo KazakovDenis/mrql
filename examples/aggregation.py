@@ -17,14 +17,12 @@ SET base_user = ARRAYELEMAT(
     0
 );
 
-PROJECT _id, 
+PROJECT 
+    _id, 
     users = MAP(
         SLICE(
             SORTARRAY(
-                FILTER($users, user, AND(
-                    NE(user.p, base_user.p),
-                    GTE(user.t, @since_dt)
-                )),
+                FILTER($users, user, AND( NE(user.p, base_user.p), GTE(user.t, @since_dt) )),
                 {t: -1}
             ),
             @limit
