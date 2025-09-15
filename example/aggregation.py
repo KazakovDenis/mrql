@@ -1,6 +1,6 @@
 import textwrap
 
-from mrql.parser.parser import PipelineTransformer, load_parser
+from mrql import get_default_compiler
 
 done = textwrap.dedent("""
     MATCH foo="bar"; 
@@ -35,12 +35,6 @@ PROJECT _id,
 """)  # noqa: W291
 
 
-def main() -> None:
-    parser = load_parser()
-    ast = parser.parse(done)
-    result = PipelineTransformer().transform(ast)
-    print(result)  # noqa: T201
-
-
 if __name__ == '__main__':
-    main()
+    compiler = get_default_compiler()
+    print(compiler(done))  # noqa: T201

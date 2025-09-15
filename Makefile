@@ -14,3 +14,6 @@ fmt:
 lint:
 	ruff check .
 	ty check .
+
+fix:
+	ruff check --fix .
