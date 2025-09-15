@@ -1,0 +1,7 @@
+[project]
+name = "mrql"
+version = "0.1.0"
+description = "MongoDB Readable Query Language"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
