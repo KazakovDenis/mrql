@@ -3,7 +3,8 @@ import textwrap
 from mrql import get_default_compiler
 
 done = textwrap.dedent("""
-    MATCH foo="bar"; 
+    -- Comment
+    MATCH foo="bar";  -- Inline comment 
     LIMIT 1;
 """)  # noqa: W291
 

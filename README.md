@@ -77,14 +77,12 @@ SET base_user = ARRAYELEMAT(
     0
 );
 
-PROJECT _id, 
+PROJECT 
+    _id, 
     users = MAP(
         SLICE(
             SORTARRAY(
-                FILTER($users, user, AND(
-                    NE(user.p, base_user.p),
-                    GTE(user.t, @since_dt)
-                )),
+                FILTER($users, user, AND( NE(user.p, base_user.p), GTE(user.t, @since_dt) )),
                 {t: -1}
             ),
             @limit
@@ -93,7 +91,6 @@ PROJECT _id,
         user.u
     )
 """
-params = { ... }
 compiler = get_default_compiler()
 pipeline = compiler(query, user_id=user_id, since_dt=since_dt, limit=limit)  # the same pipeline
 ```
