@@ -1,3 +1,7 @@
+dist
+mrql.egg-info
 .idea
 .venv
+
+uv.lock
 .python-version

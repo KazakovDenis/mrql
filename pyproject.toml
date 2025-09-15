@@ -5,4 +5,21 @@ description = "MongoDB Readable Query Language"
 authors = [{ name = "Denis Kazakov", email = "denis@kazakov.ru.net" }]
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "lark-parser>=0.12.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/KazakovDenis/mrql"
+Repository = "https://github.com/KazakovDenis/mrql"
+
+[project.optional-dependencies]
+orjson = [
+  "orjson>=3.11.3",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.13.0",
+    "ty>=0.0.1a20",
+]

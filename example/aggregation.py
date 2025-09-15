@@ -1,0 +1,46 @@
+import textwrap
+
+from mrql.parser.parser import PipelineTransformer, load_parser
+
+done = textwrap.dedent("""
+    MATCH foo="bar"; 
+    LIMIT 1;
+""")  # noqa: W291
+
+todo = textwrap.dedent("""
+MATCH users.u = @user_id;
+
+LIMIT @limit;
+
+SET base_user = ARRAYELEMAT(
+    FILTER($users, user, EQ(user.u, @user_id)),
+    0
+);
+
+PROJECT _id, 
+    users = MAP(
+        SLICE(
+            SORTARRAY(
+                FILTER($users, user, AND(
+                    NE(user.p, base_user.p),
+                    GTE(user.t, @since_dt)
+                )),
+                {t: -1}
+            ),
+            @limit
+        ),
+        user,
+        user.u
+    )
+""")  # noqa: W291
+
+
+def main() -> None:
+    parser = load_parser()
+    ast = parser.parse(done)
+    result = PipelineTransformer().transform(ast)
+    print(result)  # noqa: T201
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,96 @@
+target-version = "py310"
+line-length = 119
+
+[lint]
+select = [
+    # same as in prev linters
+    "E", # errors
+    "W", # warnings
+    "I", # isort
+    "F", # flake8
+    "S", # flake8-bandit
+    "Q", # flake8-quotas
+
+    # new rule-groups
+    "ASYNC", # flake8-async
+    "EXE", # flake8-executable
+    "INP", # flake8-no-pep420
+    "PIE", # flake8-pie
+    "SLOT", # flake8-slots
+    "T10", # flake8-debugger
+    "YTT", # flake8-2020
+    "ICN", # flake8-import-conventions
+
+     "A", # flake8-builtins
+     "ANN", # flake8-annotations
+     "RET", # flake8-return
+     "RUF", # Ruff-specific rules
+
+     "BLE", # flake8-blind-except
+     "C4", # flake8-comprehensions
+     "DTZ", # flake8-datetimez
+     "ERA", # eradicate
+     "FLY", # flynt
+     "FURB", # refurb
+     "G", # flake8-logging-format
+     "ISC", # flake8-implicit-str-concat
+     "PGH", # pygrep-hooks
+     "PYI", # flake8-pyi
+     "RSE", # flake8-raise
+     "SIM", # flake8-simplify
+     "SLF", # flake8-self
+     "T20", # flake8-print
+     "FA", # flake8-future-annotations`
+     "UP", # pyupgrade
+     "TID", # flake8-tidy-imports
+
+     "ARG", # flake8-unused-arguments
+     "B", # flake8-bugbear
+     "C90", #"mccabe
+     "N", # pep8-naming
+     "NPY", # NumPy-specific rules
+     "PD", # pandas-vet
+     "PERF", # Perflint
+     "PL", # Pylint
+     "PT", # flake8-pytest-style
+     "TCH", # flake8-type-checking
+]
+fixable = ["ALL"]
+
+ignore = [
+    "S301", # Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+    "S311", # Standard pseudo-random generators are not suitable for security/cryptographic purposes
+]
+
+# other ignores (mostly for placing rules that needs to be ignored till fixes done)
+extend-ignore = [
+    "E501", # line too long
+    "S608", # Possible SQL injection vector through string-based query construction
+]
+
+allowed-confusables = [
+    "а", "А", "б", "Б", "в", "В", "г", "Г", "е", "Е", "з", "З",
+    "и", "И", "к", "К", "м", "М", "н", "Н", "о", "О", "р", "Р",
+    "с", "С", "у", "У", "ф", "Ф", "х", "Х", "т", "Т", "Ь", "ь"
+]
+
+[lint.per-file-ignores]
+
+"tests/**/*.py" = [
+    # at least this three should be fine in tests:
+    "S101", # asserts allowed in tests...
+    "ARG", # Unused function args -> fixtures nevertheless are functionally relevant...
+    "FBT", # Don't care about booleans as positional arguments in tests, e.g. via @pytest.mark.parametrize()
+    "S106", # Possible hardcoded password assigned to argument: "secret"
+]
+
+[lint.isort]
+known-first-party = ['mrql', 'tests']
+split-on-trailing-comma = true
+
+[lint.flake8-quotes]
+inline-quotes = "single"
+multiline-quotes = "double"
+
+[format]
+quote-style="single"
