@@ -8,17 +8,21 @@ stage: match_stage
      | project_stage
 
 match_stage: "MATCH" expr
-limit_stage: "LIMIT" value
-set_stage: "SET" NAME "=" expr
+limit_stage: "LIMIT" value_or_param
+set_stage: "SET" CNAME "=" expr
 project_stage: "PROJECT" projection ("," projection)*
 
-projection: NAME "=" expr
-          | NAME               -> project_field
+projection: CNAME "=" expr
+          | CNAME -> project_field
 
 ?expr: or_expr
 
+value_or_param:
+          | NUMBER -> number
+          | "@" CNAME -> param
+
 ?or_expr: and_expr
-        | or_expr "OR" and_expr   -> or
+          | or_expr "OR" and_expr   -> or
 
 ?and_expr: cmp_expr
           | and_expr "AND" cmp_expr -> and
@@ -42,20 +46,21 @@ projection: NAME "=" expr
 ?factor: atom
        | "-" factor -> neg
 
-?atom: NAME                          -> var
-     | "@"NAME                       -> param
-     | ESCAPED_STRING                -> string
-     | NUMBER                        -> number
+DOTTED_NAME: CNAME ("." CNAME)*
+
+?atom: DOTTED_NAME           -> var
+     | "@" CNAME             -> param
+     | ESCAPED_STRING        -> string
+     | NUMBER                -> number
      | array
      | func_call
      | field_ref
 
-array : "[" [expr ("," expr)*] "]"
-field_ref: "$"NAME ("."NAME)*
-value: NUMBER
-func_call: NAME "(" [expr ("," expr)*] ")"
+array: "[" [expr ("," expr)*] "]"
+field_ref: "$" DOTTED_NAME
+func_call: CNAME "(" [expr ("," expr)*] ")"
 
-%import common.CNAME -> NAME
+%import common.CNAME
 %import common.SIGNED_NUMBER -> NUMBER
 %import common.ESCAPED_STRING
 

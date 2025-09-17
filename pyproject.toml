@@ -13,11 +13,6 @@ dependencies = [
 Homepage = "https://github.com/KazakovDenis/mrql"
 Repository = "https://github.com/KazakovDenis/mrql"
 
-[project.optional-dependencies]
-orjson = [
-  "orjson>=3.11.3",
-]
-
 [dependency-groups]
 dev = [
     "ruff>=0.13.0",

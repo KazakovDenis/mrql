@@ -4,8 +4,8 @@ from mrql import get_default_compiler
 
 done = textwrap.dedent("""
     -- Comment
-    MATCH foo="bar";  -- Inline comment 
-    LIMIT 1;
+    MATCH users.u = @user_id;  -- Inline comment 
+    LIMIT @limit;
 """)  # noqa: W291
 
 todo = textwrap.dedent("""
@@ -36,4 +36,5 @@ PROJECT
 
 if __name__ == '__main__':
     compiler = get_default_compiler()
-    print(compiler(done))  # noqa: T201
+    params = {'user_id': 123, 'limit': 100}
+    print(compiler(done, **params))  # noqa: T201
